@@ -1,50 +1,49 @@
-"use strict";
+class Counter extends React.Component {
+    constructor(props) {
+        super(props);
+        this.handleAddOne = this.handleAddOne.bind(this);
+        this.handleMinusOne = this.handleMinusOne.bind(this);
+        this.handleReset = this.handleReset.bind(this);
+        this.state = {
+            count: 0
+        }
+    }
 
-var count = 0;
+    handleAddOne() {
+        this.setState((prevState) => {
+            return {
+                count : prevState.count + 1
+            }
+        });
+    }
 
-var minusOne = function minusOne() {
-    count--;
-    renderCounterApp();
-};
+    handleMinusOne() {
+        this.setState((prevState) => {
+            return {
+                count : prevState.count > 0 ? prevState.count - 1 : prevState.count 
+            }
+        })
+    }
 
-var addOne = function addOne() {
-    count++;
-    renderCounterApp();
-};
+    handleReset() {
+        this.setState(() => {
+            return {
+                count : 0
+            }
+        })
+    }
 
-var reset = function reset() {
-    count = 0;
-    renderCounterApp();
-};
+    render() {
+        return (
+            <div>
+                <h1>Count : {this.state.count} </h1>
+                <button onClick={this.handleAddOne}>+1</button>
+                <button onClick={this.handleMinusOne}>-1</button>
+                <button onClick={this.handleReset}>reset</button>
+            </div>
+        );
+    }
+}
 
-var renderCounterApp = function renderCounterApp() {
-    var template = React.createElement(
-        "div",
-        null,
-        React.createElement(
-            "h1",
-            null,
-            "Counter : ",
-            count
-        ),
-        React.createElement(
-            "button",
-            { id: "minus", onClick: minusOne },
-            "-1"
-        ),
-        React.createElement(
-            "button",
-            { id: "reset", onClick: reset },
-            "reset"
-        ),
-        React.createElement(
-            "button",
-            { id: "add", onClick: addOne },
-            "+1"
-        )
-    );
 
-    ReactDOM.render(template, document.getElementById('app'));
-};
-
-renderCounterApp();
+ReactDOM.render(<Counter />, document.getElementById('app'));

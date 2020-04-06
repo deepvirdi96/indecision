@@ -1,20 +1,29 @@
-let isVisible = false;
+class Visibility extends React.Component {
+    constructor(props) {
+        super(props);
+        this.changeVisibility = this.changeVisibility.bind(this);
+        this.state = {
+            isVisible: false
+        }
+    }
 
-const changeVisibility = () => {
-    isVisible = !isVisible
-    renderVisibilityApp();
+    changeVisibility() {
+        this.setState((prevState) => {
+            return {
+                isVisible : !prevState.isVisible
+            }
+        });
+    }
+
+    render() {
+        return (
+            <div>
+                <h1>Toggle visibility</h1>
+                <button onClick={this.changeVisibility}>{this.state.isVisible ? 'Hide Title' : 'Show Title'}</button>
+                {this.state.isVisible === true && <p>This is the hidden tresure</p>}
+            </div>
+        )
+    }
 }
 
-const renderVisibilityApp = () => {
-    const template = (
-        <div>
-            <h1>Toggle visibility</h1>
-            <button onClick={changeVisibility}>{isVisible === false ? 'Show Title' : 'Hide Title'}</button>
-            { isVisible === true && <p>This is the hidden tresure</p> }
-        </div>
-    );
-    ReactDOM.render(template, document.getElementById('app'))
-}
-
-renderVisibilityApp();
-
+ReactDOM.render(<Visibility />, document.getElementById('app'));
